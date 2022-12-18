@@ -31,4 +31,26 @@ class ContactsService {
     contacts$.add(Contact.fromJson(result));
     loading$.value = false;
   }
+
+  updateContact(Contact contact) async {
+    loading$.value = true;
+    await _client
+        .from('contacts')
+        .update(contact.toJson())
+        .eq('id', contact.id);
+    var updatedContacts = contacts$.value;
+    var index =
+        updatedContacts.indexWhere((element) => element.id == contact.id);
+    updatedContacts[index] = contact;
+    contacts$.subject.add(updatedContacts);
+    loading$.value = false;
+    return;
+  }
+
+  removeContact(Contact contact) async {
+    List<dynamic> result =
+        await _client.from('contacts').delete().eq('id', contact.id);
+    if (result.isEmpty) return;
+    contacts$.remove(contact);
+  }
 }
