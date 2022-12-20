@@ -26,14 +26,6 @@ class _ContactsTabState extends State<ContactsTab> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Positioned(
-          bottom: 16,
-          right: 16,
-          child: FloatingActionButton(
-            onPressed: _showDialog,
-            child: const Icon(Icons.add),
-          ),
-        ),
         Padding(
             padding: const EdgeInsets.all(8.0),
             child: Obx(() {
@@ -109,6 +101,14 @@ class _ContactsTabState extends State<ContactsTab> {
                 ),
               );
             })),
+        Positioned(
+          bottom: 16,
+          right: 16,
+          child: FloatingActionButton(
+            onPressed: _showDialog,
+            child: const Icon(Icons.add),
+          ),
+        ),
       ],
     );
   }
