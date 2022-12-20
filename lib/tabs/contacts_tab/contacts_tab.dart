@@ -56,15 +56,27 @@ class _ContactsTabState extends State<ContactsTab> {
                                   Row(
                                     children: [
                                       ElevatedButton(
+                                          style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                      Colors.red
+                                                          .withOpacity(0.8))),
+                                          onPressed: () async {
+                                            var remove =
+                                                await _showConfirmDialog();
+                                            if (remove) {
+                                              service.removeContact(contact);
+                                            }
+                                          },
+                                          child: const Text('Löschen')),
+                                      const SizedBox(
+                                        width: 16,
+                                      ),
+                                      ElevatedButton(
                                           onPressed: () {
                                             _showDialog(contact: contact);
                                           },
                                           child: const Text('Bearbeiten')),
-                                      ElevatedButton(
-                                          onPressed: () {
-                                            service.removeContact(contact);
-                                          },
-                                          child: const Text('Löschen')),
                                     ],
                                   ),
                                   Table(
@@ -216,6 +228,32 @@ class _ContactsTabState extends State<ContactsTab> {
                   ],
                 ),
               )
+            ],
+          );
+        });
+  }
+
+  Future<bool> _showConfirmDialog() async {
+    return await showDialog(
+        context: context,
+        builder: (BuildContext ctx) {
+          return AlertDialog(
+            title: const Text('Bitte bestätigen'),
+            content: const Text('Diesen Kontakt wirlich löschen??'),
+            actions: [
+              // The "Yes" button
+              TextButton(
+                  onPressed: () {
+                    // Close the dialog
+                    Navigator.of(context).pop(true);
+                  },
+                  child: const Text('Ja')),
+              TextButton(
+                  onPressed: () {
+                    // Close the dialog
+                    Navigator.of(context).pop(false);
+                  },
+                  child: const Text('Nein'))
             ],
           );
         });
