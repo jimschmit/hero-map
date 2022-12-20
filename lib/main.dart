@@ -2,8 +2,10 @@ import 'package:fip_search/services/contacts_service.dart';
 import 'package:fip_search/tabs/contacts_tab/contacts_tab.dart';
 import 'package:fip_search/tabs/map_tab/map_tab.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +27,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'HERO Suche',
         theme: ThemeData(
           primarySwatch: Colors.blue,
@@ -33,6 +36,29 @@ class MyApp extends StatelessWidget {
           length: 2,
           child: Scaffold(
             appBar: AppBar(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Spacer(),
+                  Column(
+                    children: const [
+                      Text('Nutzung auf eigene Verantwortung'),
+                      Text(
+                        'Bitte keine genauen Daten angeben, die Daten sind öffentlich',
+                        style: TextStyle(fontSize: 10),
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      launchUrl(
+                          Uri.parse('https://github.com/jimschmit/hero-map'));
+                    },
+                    child: SvgPicture.asset('assets/images/github.svg'),
+                  )
+                ],
+              ),
               bottom: const TabBar(
                 tabs: [
                   Tab(icon: Icon(Icons.map)),

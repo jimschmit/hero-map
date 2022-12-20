@@ -180,11 +180,15 @@ class _ContactsTabState extends State<ContactsTab> {
                       height: 24,
                     ),
                     SizedBox(
-                        height: 150,
-                        width: 400,
-                        child: LocationPicker(
-                          onLocationUpdate: (el) => location = el,
-                        )),
+                      height: 150,
+                      width: 400,
+                      child: LocationPicker(
+                        onLocationUpdate: (el) => location = el,
+                        position: contact != null
+                            ? LatLng(contact.lat, contact.lng)
+                            : null,
+                      ),
+                    ),
                     TextButton(
                         onPressed: () {
                           var editMode = contact != null;

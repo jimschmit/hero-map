@@ -3,8 +3,13 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
 class LocationPicker extends StatefulWidget {
-  const LocationPicker({super.key, required this.onLocationUpdate});
+  const LocationPicker({
+    super.key,
+    required this.onLocationUpdate,
+    this.position,
+  });
   final void Function(LatLng location) onLocationUpdate;
+  final LatLng? position;
 
   @override
   State<LocationPicker> createState() => _LocationPickerState();
@@ -25,7 +30,7 @@ class _LocationPickerState extends State<LocationPicker> {
       key: ValueKey(MediaQuery.of(context).orientation),
       mapController: mapController,
       options: MapOptions(
-          center: LatLng(51.165691, 10.451526),
+          center: widget.position ?? LatLng(51.165691, 10.451526),
           zoom: 6,
           onMapReady: () {
             setState(() {
