@@ -1,3 +1,4 @@
+import 'package:fip_search/components/info_container.dart';
 import 'package:fip_search/models/contact_model.dart';
 import 'package:fip_search/services/contacts_service.dart';
 import 'package:fip_search/services/geo_coding_service.dart';
@@ -162,33 +163,7 @@ class _DistanceTabState extends State<DistanceTab> {
                   PopupMarkerLayerOptions.rotationAlignmentFor(AnchorAlign.top),
               popupBuilder: (BuildContext context, Marker marker) {
                 var contact = selectedContact!;
-                return Container(
-                  color: Colors.white,
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(contact.name!),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      if (contact.email != null) Text(contact.email!),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      if (contact.phoneNumber != null)
-                        Text(contact.phoneNumber!),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      if (contact.additionalInfo != null)
-                        Text(contact.additionalInfo!),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                    ],
-                  ),
-                );
+                return ContactInfo(contact: contact);
               },
             ),
           ),

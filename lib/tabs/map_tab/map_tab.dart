@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fip_search/components/info_container.dart';
 import 'package:fip_search/models/contact_model.dart';
 import 'package:fip_search/services/contacts_service.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,6 @@ import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 
 class MapsTab extends StatefulWidget {
@@ -89,52 +89,10 @@ class _MapsTabState extends State<MapsTab> {
                   popupBuilder: (BuildContext context, Marker marker) {
                     var index = markers.indexOf(marker);
                     var contact = contacts![index];
-                    return Container(
-                      color: Colors.white,
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(contact.name!),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          if (contact.email != null) Text(contact.email!),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          if (contact.phoneNumber != null)
-                            Text(contact.phoneNumber!),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          if (contact.additionalInfo != null)
-                            Text(contact.additionalInfo!),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          FutureBuilder(
-                              future: position,
-                              builder: ((context, snapshot) {
-                                if (!snapshot.hasData) {
-                                  return const CircularProgressIndicator();
-                                }
-
-                                var position = snapshot.data!;
-                                var distance = Geolocator.distanceBetween(
-                                    marker.point.latitude,
-                                    marker.point.longitude,
-                                    position.latitude,
-                                    position.longitude);
-                                NumberFormat formatter = NumberFormat();
-                                formatter.minimumFractionDigits = 0;
-                                formatter.maximumFractionDigits = 2;
-                                var formattedDistance =
-                                    formatter.format(distance / 1000);
-                                return Text('Distanz: ${formattedDistance}km');
-                              }))
-                        ],
-                      ),
+                    return ContactInfo(
+                      contact: contact,
+                      currentPosition: position,
+                      referencePosition: marker.point,
                     );
                   },
                 ),
