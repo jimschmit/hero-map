@@ -1,5 +1,6 @@
 import 'package:fip_search/services/contacts_service.dart';
 import 'package:fip_search/tabs/contacts_tab/contacts_tab.dart';
+import 'package:fip_search/tabs/distance_tab/distance_tab.dart';
 import 'package:fip_search/tabs/map_tab/map_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: DefaultTabController(
-          length: 2,
+          length: 3,
           child: Scaffold(
             appBar: AppBar(
               title: Row(
@@ -63,11 +64,12 @@ class MyApp extends StatelessWidget {
                 tabs: [
                   Tab(icon: Icon(Icons.map)),
                   Tab(icon: Icon(Icons.contact_page)),
+                  Tab(icon: Icon(Icons.directions)),
                 ],
               ),
             ),
             body: const TabBarView(
-              children: [MapsTab(), ContactsTab()],
+              children: [MapsTab(), ContactsTab(), DistanceTab()],
             ),
           ),
         ));
